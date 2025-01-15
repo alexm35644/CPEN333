@@ -101,7 +101,7 @@ def updateTheBoardBasedOnTheUserMove(move: str) -> None:
     """
     if move == 'W': #Iterate from top to bottom for each column 
         for col in range(4):
-            for row in range(4): # shift numbers up to empty spots or combine like numbers
+            for row in range(4): 
                 #The statement below shifts to empty spots
                 if board[row][col] != '' and nextEmpty(move, col) != -1:
                     temp = board[row][col]
@@ -118,7 +118,7 @@ def updateTheBoardBasedOnTheUserMove(move: str) -> None:
                     temp = board[row][col]
                     board[row][col] = ''
                     board[nextEmpty(move, col)][col] = temp
-            
+
     if move == 'S': #Iterate from bottom to top for each column 
         for col in range(4):
             for row in range(3, -1, -1):
@@ -142,15 +142,18 @@ def updateTheBoardBasedOnTheUserMove(move: str) -> None:
     if move == 'A': #Iterate from left to right for each row 
         for row in range(4):
             for col in range(4):
+                #The statement below shifts to empty spots
                 if board[row][col] != '' and nextEmpty(move, row) != -1:
                     temp = board[row][col]
                     board[row][col] = ''
                     board[row][nextEmpty(move, row)] = temp
             for col in range(4):
+                #The statement below combines like numbers
                 if col!=3 and board[row][col] == board[row][col+1] and (board[row][col] and board[row][col+1]) != '':
                     board[row][col+1] = int(board[row][col+1])*2
                     board[row][col] = ''
             for col in range(4):
+                #The statement below shifts to empty spots
                 if board[row][col] != '' and nextEmpty(move, row) != -1:
                     temp = board[row][col]
                     board[row][col] = ''
@@ -160,15 +163,18 @@ def updateTheBoardBasedOnTheUserMove(move: str) -> None:
     if move == 'D': #Iterate from right to left for each row 
         for row in range(4):
             for col in range(3, -1, -1):
+                #The statement below shifts to empty spots
                 if board[row][col] != '' and nextEmpty(move, row) != -1:
                     temp = board[row][col]
                     board[row][col] = ''
                     board[row][nextEmpty(move, row)] = temp
             for col in range(3, -1, -1):
+                #The statement below combines like numbers
                 if col!=0 and board[row][col-1] == board[row][col] and (board[row][col-1] and board[row][col]) != '':
                     board[row][col-1] = int(board[row][col-1])*2
                     board[row][col] = ''
             for col in range(3, -1, -1):
+                #The statement below shifts to empty spots
                 if board[row][col] != '' and nextEmpty(move, row) != -1:
                     temp = board[row][col]
                     board[row][col] = ''
