@@ -60,11 +60,13 @@ def addANewTwoToBoard() -> None:
     """
     emptyCells: list = []
 
+    # Makes a list of all empty cells in the format rowcol
     for row in range(4):
         for col in range(4):
             if(board[row][col] == ''):
                 emptyCells.append(row*10 + col)
 
+    # Chooses a random empty location 
     newTwoLocation = random.choice(emptyCells)
     newCol = newTwoLocation % 10
     newRow = (int)(newTwoLocation / 10)
@@ -101,120 +103,105 @@ def updateTheBoardBasedOnTheUserMove(move: str) -> None:
     """
     if move == 'W': #Iterate from top to bottom for each column 
         for col in range(4):
-            for row in range(4): 
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, col) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[nextEmpty(move, col)][col] = temp
+            shiftNumbers(move, col) #shifts all numbers to one direction 
             for row in range(4):
                 #The statement below combines like numbers
                 if row != 3 and board[row+1][col] == board[row][col] and (board[row+1][col] and board[row][col]) != '':
-                    board[row+1][col] = int(board[row+1][col])*2
-                    board[row][col] = ''
-            for row in range(4): # shift numbers up to empty spots or combine like numbers
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, col) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[nextEmpty(move, col)][col] = temp
+                    board[row][col] = int(board[row][col])*2
+                    board[row+1][col] = ''
+            shiftNumbers(move, col)
 
     if move == 'S': #Iterate from bottom to top for each column 
         for col in range(4):
-            for row in range(3, -1, -1):
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, col) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[nextEmpty(move, col)][col] = temp
+            shiftNumbers(move, col) #shifts all numbers to one direction 
             for row in range(3, -1, -1):
                 #The statement below combines like numbers
                 if row != 0 and board[row][col] == board[row-1][col] and (board[row][col] and board[row-1][col]) != '':
-                    board[row-1][col] = int(board[row-1][col])*2
-                    board[row][col] = ''
-            for row in range(3, -1, -1):
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, col) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[nextEmpty(move, col)][col] = temp
-    
-    if move == 'A': #Iterate from left to right for each row 
+                    board[row][col] = int(board[row][col])*2
+                    board[row-1][col] = ''
+            shiftNumbers(move, col)
+
+    if move == 'A': #Iterate from right to left for each row 
         for row in range(4):
-            for col in range(4):
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, row) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[row][nextEmpty(move, row)] = temp
+            shiftNumbers(move, row)
             for col in range(4):
                 #The statement below combines like numbers
                 if col!=3 and board[row][col] == board[row][col+1] and (board[row][col] and board[row][col+1]) != '':
-                    board[row][col+1] = int(board[row][col+1])*2
-                    board[row][col] = ''
-            for col in range(4):
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, row) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[row][nextEmpty(move, row)] = temp
+                    board[row][col] = int(board[row][col])*2
+                    board[row][col+1] = ''
+            shiftNumbers(move, row)
 
-
-    if move == 'D': #Iterate from right to left for each row 
+    if move == 'D': #Iterate from left to right for each row 
         for row in range(4):
-            for col in range(3, -1, -1):
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, row) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[row][nextEmpty(move, row)] = temp
+            shiftNumbers(move, row)
             for col in range(3, -1, -1):
                 #The statement below combines like numbers
                 if col!=0 and board[row][col-1] == board[row][col] and (board[row][col-1] and board[row][col]) != '':
-                    board[row][col-1] = int(board[row][col-1])*2
-                    board[row][col] = ''
-            for col in range(3, -1, -1):
-                #The statement below shifts to empty spots
-                if board[row][col] != '' and nextEmpty(move, row) != -1:
-                    temp = board[row][col]
-                    board[row][col] = ''
-                    board[row][nextEmpty(move, row)] = temp
+                    board[row][col] = int(board[row][col])*2
+                    board[row][col-1]  = ''
+            shiftNumbers(move, row)
+
+
+    
 
 
 #up to two new functions allowed to be added (if needed)
 #as usual, they must be documented well
 #they have to be placed below this line
 
-def nextEmpty(move: str, index: int) -> int:
+def shiftNumbers(move: str, index: int) -> None: 
     """
-        Returns the next empty spot given a move and an index. 
-        The index is either a row or column given the move. 
+        Shifts all numbers on the board acoording to the direction. 
+        The move argument is either 'W', 'A', 'S', or 'D'.
+        The index argument is either a row or column. It only shifts the specified index. 
+        Directions: W for up; A for left; S for down, and D for right
     """
-    emptySpot = -1
 
-    if move == 'W': #Bottom to top. Index is a column. 
-        for row in range(3, -1, -1):
-            if board[row][index] == '':
-                emptySpot = row
-        return emptySpot
-    
-    if move == 'S': #Top to bottom. Index is a column. 
+
+    # SHIFTING LOGIC: 
+    # The shifting logic is a simple sorting loop that shifts values using a pointer value. 
+    # The point values only updates when there is an empty value. The next value it finds will be 
+    # moved to that empty spot. 
+
+
+    if move == 'W': #Bottom to top
+        pointer = 0; 
         for row in range(4):
-            if board[row][index] == '':
-                emptySpot = row
-        return emptySpot
+            if board[row][index] != '':
+                temp = board[pointer][index]
+                board[pointer][index] = board[row][index]
+                board[row][index] = temp
+                pointer +=1 
 
-    if move == 'A': #Right to left. Index is a row. 
-        for col in range(3, -1, -1):
-            if board[index][col] == '':
-                emptySpot = col
-        return emptySpot
+    if move == 'S': #Top to Bottom
+        pointer = 3; 
+        for row in range(3, -1, -1):
+            if board[row][index] != '':
+                temp = board[pointer][index]
+                board[pointer][index] = board[row][index]
+                board[row][index] = temp
+                pointer -=1 
     
-    if move == 'D': #Left to right. Index is a row. 
+    if move == 'A': #Top to Bottom
+        pointer = 0; 
         for col in range(4):
-            if board[index][col] == '':
-                emptySpot = col
-        return emptySpot
+            if board[index][col] != '':
+                temp = board[index][pointer]
+                board[index][pointer] = board[index][col]
+                board[index][col] = temp
+                pointer +=1 
+
+    if move == 'D': #Top to Bottom
+        pointer = 3; 
+        for col in range(3, -1, -1):
+            if board[index][col] != '':
+                temp = board[index][pointer]
+                board[index][pointer] = board[index][col]
+                board[index][col] = temp
+                pointer -=1 
+
+    
+
 
 if __name__ == "__main__":  # Use as is  
     init()
