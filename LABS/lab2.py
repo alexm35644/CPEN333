@@ -94,10 +94,11 @@ class Rational:
                 if denominator is 0, it returns "NaN" (not a number)
                 if numerator or the denominator is not an integer, it returns "NaN"
         """ 
-        if self.denominator == 1:
+        # When denominator is 1 or Numerator is 0, we only print the numerator 
+        if self.denominator == 1 or self.numerator == 0:
             str_num = str(self.numerator)
             return str_num
-        
+
         elif self.denominator == 0: 
             return "NaN"
         
