@@ -94,17 +94,20 @@ class Rational:
                 if denominator is 0, it returns "NaN" (not a number)
                 if numerator or the denominator is not an integer, it returns "NaN"
         """ 
-        # When denominator is 1 or Numerator is 0, we only print the numerator 
-        if self.denominator == 1 or self.numerator == 0:
-            str_num = str(self.numerator)
-            return str_num
-
+        # When the numerator or denominator are not integers, return NaN
+        if not isinstance(self.numerator, int) or not isinstance(self.denominator, int):
+            return "NaN"
+        
+        # Checks if denominator = 0
         elif self.denominator == 0: 
             return "NaN"
+    
+        # When the denominator is 1 or Numerator is 0, we only print the numerator
+        elif self.denominator == 1 or self.numerator == 0:
+            str_num = str(self.numerator)
+            return str_num
         
-        elif not self.denominator.is_integer() or not self.denominator.is_integer():
-            return "NaN"
-        
+        # Prints the numerator and denominator 
         else: 
             str_num = str(self.numerator)
             str_den = str(self.denominator)
