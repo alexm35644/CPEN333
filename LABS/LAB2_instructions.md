@@ -13,7 +13,10 @@ The numerator and the denominator must be integers (whole numbers). Otherwise, i
 Every integer d has an equivalent rational number d/1. We store such a rational number as usual, but we display only the integer value when displaying the result of the calculations on our GUI.
 Assuming that we have  and , then recall that:
 
-
+a/b + c/d = (ad + bc)/bd
+a/b - c/d = (ad - bc)/bd
+a/b * c/d = ac/bd
+(a/b) / (c/d) = ad/bc
 
 
 Consider the following code template. The provided code has two classes: Rational and GUI. 

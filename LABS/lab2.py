@@ -1,6 +1,6 @@
 #Lab 2 (part 1)
-#student name:
-#student number:
+#student name: Alexander Martinez       
+#student number: 10948024
 
 from __future__ import annotations  #helps with type hints
 from tkinter import *
@@ -43,28 +43,47 @@ class Rational:
            adds 'this' rational to secondRational
            returns the result as a rational number (type Rational)
         """     
-        # to implement
+        # a/b + c/d = (ad + bc)/bd
+        add_num = (self.numerator * secondRational.denominator) + (self.denominator * secondRational.numerator)
+        add_denom = (self.denominator * secondRational.denominator)
+        added_rational = Rational(add_num, add_denom)
+        return added_rational
+        
     
     def subtract(self, secondRational: Rational) -> Rational:
         """
            subtracts secondRational from 'this' rational to 
            returns the result as a rational number (type Rational)
         """ 
-        # to implement
+        # a/b - c/d = (ad - bc)/bd
+        sub_num = (self.numerator * secondRational.denominator) - (self.denominator * secondRational.numerator)
+        sub_denom = (self.denominator * secondRational.denominator)
+        subtracted_rational = Rational(sub_num, sub_denom)
+        return subtracted_rational
+        
 
     def multiply(self, secondRational: Rational) -> Rational:
         """
            multiplies 'this' rational to secondRational
            returns the result as a rational number (type Rational)
         """ 
-        # to implement
+        # a/b * c/d = ac/bd
+        div_num = (self.numerator * secondRational.numerator)
+        div_denom = (self.denominator * secondRational.denominator)
+        divided_rational = Rational(div_num, div_denom)
+        return divided_rational
 
     def divide(self, secondRational: Rational) -> Rational:
         """
            divides 'this' rational by secondRational
            returns the result as a rational number (type Rational)
         """ 
-        # to implement
+        # (a/b) / (c/d) = ad/bc
+        div_num = (self.numerator * secondRational.denominator)
+        div_denom = (self.denominator * secondRational.numerator)
+        divided_rational = Rational(div_num, div_denom)
+        return divided_rational
+
 
     def toString(self) -> str:
         """             
@@ -75,8 +94,24 @@ class Rational:
                 if denominator is 0, it returns "NaN" (not a number)
                 if numerator or the denominator is not an integer, it returns "NaN"
         """ 
-        # to implement
-
+        if self.denominator == 1:
+            str_num = str(self.numerator)
+            return str_num
+        
+        elif self.denominator == 0: 
+            return "NaN"
+        
+        elif not self.denominator.is_integer() or not self.denominator.is_integer():
+            return "NaN"
+        
+        else: 
+            str_num = str(self.numerator)
+            str_den = str(self.denominator)
+            string_rational = str_num + "/" + str_den
+            return string_rational
+        
+        
+    
 class GUI:
     """ 
         this class implements the GUI for our program
