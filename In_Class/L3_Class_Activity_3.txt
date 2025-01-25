@@ -1,0 +1,29 @@
+
+Q1) Explain the notion of a process. How is it different from the program stored on the hard disk?
+
+    A process is active - it is actively using CPU resources like memory and it actively being 
+    executed. A program is not active - it is simply stored on a hard disk and does not do anything 
+    on its own. 
+
+Q2) State and explain two of the different process states.
+
+    From my memory, there are 5 process states. One of the process states is the start up. 
+    This is when a program is first executed. In this state, the program is actively 
+    initialized (like loading up a window). The process is then put into a ready state. In this state,
+    the program is waiting for a command or input. 
+
+Q3) Explain the concept of context switch. Is context-switch time overhead?
+
+    A context switch is used to switch between different processes on single processor. If you only 
+    have 1 processor, you need a way to switch between processes in order to multitask. For this to 
+    happen you need to have a mechanism that saves the current state and switches to another. Then, 
+    it can go back to that state when needed. The context-switch does require time overhead, 
+    because it does not useful work during the switch (just saving). So, you want to minimize 
+    context switches. 
+
+Q4) What is the join() method of the Python's multiprocessing module used for?
+
+    From what I can see in slide 11, the join method is used for a executing a process. It 
+    allows you to either execute a process with a timeout or if there is no timeout, it 
+    executes until it is done. 
+
