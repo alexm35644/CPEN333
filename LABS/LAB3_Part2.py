@@ -120,32 +120,28 @@ if __name__ == "__main__":
               [8, 3, 7, 6, 1, 4, 2, 9, 5 ]
             ]
     
-    testcase = test1  # or test2
+    testcase = test1   #modify here for other testcases
     SIZE = 9
+    
+    processList = []
 
-    column_processes = []
-    for col in range(SIZE): #checking all columns
-        columnProcess = mp.Process(target=checkColumn, args=(testcase, col))
-        columnProcess.start()
-        column_processes.append(columnProcess)
-    # Runs all column processes in parallel and waits for them to finish. 
-    for process in column_processes:
-        process.join()  
+    for col in range(SIZE):  #checking all columns
+        col_process = mp.Process(target=checkColumn, args=(testcase, col))
+        processList.append(col_process)
+        col_process.start()
+ 
+    for row in range(SIZE):  #checking all rows
+        row_process = mp.Process(target=checkRow, args=(testcase, row))
+        processList.append(row_process)
+        row_process.start()
+  
+    for subgrid in range(SIZE):   #checking all subgrids
+        subgrid_process = mp.Process(target=checkSubgrid, args=(testcase, subgrid))
+        processList.append(subgrid_process)
+        subgrid_process.start()
 
-    row_processes = [] #checking all rows 
-    for row in range(SIZE):
-        rowProcess = mp.Process(target=checkRow, args=(testcase, row))
-        rowProcess.start()
-        row_processes.append(rowProcess)
-    # Runs all row processes in parallel and waits for them to finish. 
-    for process in row_processes:
-        process.join()  
-
-    subgrid_processes = [] #checking all subgrids
-    for subgrid in range(SIZE):
-        subgridProcess = mp.Process(target=checkSubgrid, args=(testcase, subgrid))
-        subgridProcess.start()
-        subgrid_processes.append(subgridProcess)
-    # Runs all subgrid processes in parallel and waits for them to finish. 
-    for process in subgrid_processes:
-        process.join()  
+    # By using join this way, we make sure that all processes run in parallel 
+    # while still preventing the main program from terminating early.
+    # This uses max cores. However, things will print out of order. 
+    for process in processList: 
+        process.join()
