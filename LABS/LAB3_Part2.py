@@ -1,7 +1,7 @@
 #student name: Alexander Martinez
 #student number: 10948024
 
-import multiprocessing
+import multiprocessing as mp
 
 def checkColumn(puzzle: list, column: int):
     """ 
@@ -122,10 +122,29 @@ if __name__ == "__main__":
     
     testcase = test1   #modify here for other testcases
     SIZE = 9
+    
+    processList = []
 
+    columnProcess =[]
     for col in range(SIZE):  #checking all columns
-        checkColumn(testcase, col)
+        col_process = mp.Process(target=checkColumn, args=(testcase, col))
+        processList.append(col_process)
+        col_process.start()
+ 
+    rowProcess =[]
     for row in range(SIZE):  #checking all rows
-        checkRow(testcase, row)
+        row_process = mp.Process(target=checkRow, args=(testcase, row))
+        processList.append(row_process)
+        row_process.start()
+  
+    subgridProcess =[]
     for subgrid in range(SIZE):   #checking all subgrids
-        checkSubgrid(testcase, subgrid)
+        subgrid_process = mp.Process(target=checkSubgrid, args=(testcase, subgrid))
+        processList.append(subgrid_process)
+        subgrid_process.start()
+
+    # By using join this way, we make sure that all processes run in parallel 
+    # while still preventing the main program from terminating early.
+    # This uses max cores. However, things will print out of order. 
+    for process in processList: 
+        process.join()
