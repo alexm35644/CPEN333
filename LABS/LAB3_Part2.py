@@ -125,27 +125,27 @@ if __name__ == "__main__":
 
     column_processes = []
     for col in range(SIZE): #checking all columns
-        p = mp.Process(target=checkColumn, args=(testcase, col))
-        p.start()
-        column_processes.append(p)
+        columnProcess = mp.Process(target=checkColumn, args=(testcase, col))
+        columnProcess.start()
+        column_processes.append(columnProcess)
     # Runs all column processes in parallel and waits for them to finish. 
-    for p in column_processes:
-        p.join()  
+    for process in column_processes:
+        process.join()  
 
     row_processes = [] #checking all rows 
     for row in range(SIZE):
-        p = mp.Process(target=checkRow, args=(testcase, row))
-        p.start()
-        row_processes.append(p)
+        rowProcess = mp.Process(target=checkRow, args=(testcase, row))
+        rowProcess.start()
+        row_processes.append(rowProcess)
     # Runs all row processes in parallel and waits for them to finish. 
-    for p in row_processes:
-        p.join()  
+    for process in row_processes:
+        process.join()  
 
     subgrid_processes = [] #checking all subgrids
     for subgrid in range(SIZE):
-        p = mp.Process(target=checkSubgrid, args=(testcase, subgrid))
-        p.start()
-        subgrid_processes.append(p)
+        subgridProcess = mp.Process(target=checkSubgrid, args=(testcase, subgrid))
+        subgridProcess.start()
+        subgrid_processes.append(subgridProcess)
     # Runs all subgrid processes in parallel and waits for them to finish. 
-    for p in subgrid_processes:
-        p.join()  
+    for process in subgrid_processes:
+        process.join()  
