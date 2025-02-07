@@ -16,26 +16,27 @@ def sortingWorker(firstHalf: bool) -> None:
        sorting algorithm of your choice and code it.
     """
     if(firstHalf):
-        endIndex = int(len(testcase)/2)
+        endIndex = len(testcase)//2 # //2 is integer division so I don't have to cast int
 
         # Adding testcase first half to sortedFirstHalf
-        for i in range(endIndex):
-            sortedFirstHalf.append(testcase[i])
+        sortedFirstHalf[:] = testcase[:len(testcase)//2]
 
-        # Sorting first half 
+        # Sorting first half using bubble sort. 
+        # This algorithm uses 2 loops. It swaps elements one at a time comparing indexes 
+        # side by side. It eventually results in a fully sorted list. Bubble sort is not 
+        # the most efficient sorting but it is very straightforward to understand. 
         for i in range(endIndex):
             for j in range(0, endIndex-i-1):
                 if sortedFirstHalf[j] > sortedFirstHalf[j+1]:  # Swap if the element found is greater
                     sortedFirstHalf[j], sortedFirstHalf[j+1] = sortedFirstHalf[j+1], sortedFirstHalf[j]
     else:
-        startIndex = int(len(testcase)/2)
+        startIndex = len(testcase)//2
         endIndex = len(testcase)
 
         # Adding second half of the testcase to sortedSecondHalf
-        for i in range(startIndex, endIndex):
-            sortedSecondHalf.append(testcase[i])
+        sortedSecondHalf[:] = testcase[len(testcase)//2:]
 
-        # Sorting second half 
+        # Sorting second half using bubble sort. 
         for i in range(len(sortedSecondHalf)):         
             for j in range(len(sortedSecondHalf) - i - 1):
                 if sortedSecondHalf[j] > sortedSecondHalf[j + 1]:  # Swap if the element found is greater
@@ -53,6 +54,7 @@ def mergingWorker() -> None:
     j = 0
 
     # Merge elements from both halves
+    # this loop requires both halfs are sorted first. It appends elements in order. 
     while i < len(sortedFirstHalf) and j < len(sortedSecondHalf):
         if sortedFirstHalf[i] < sortedSecondHalf[j]:
             SortedFullList.append(sortedFirstHalf[i])
@@ -92,7 +94,8 @@ if __name__ == "__main__":
     first.join()
     second.join()
 
-    # Starting and joining the merging thread
+    # Starting and joining the merging thread. This requires first and second half to 
+    # be sorted before full merge can start. 
     full.start()
     full.join()
 
