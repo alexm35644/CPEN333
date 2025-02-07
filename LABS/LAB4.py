@@ -18,7 +18,7 @@ def sortingWorker(firstHalf: bool) -> None:
     if(firstHalf):
         endIndex = int(len(testcase)/2)
 
-        # Adding testcase first half to list 
+        # Adding testcase first half to sortedFirstHalf
         for i in range(endIndex):
             sortedFirstHalf.append(testcase[i])
 
@@ -31,11 +31,11 @@ def sortingWorker(firstHalf: bool) -> None:
         startIndex = int(len(testcase)/2)
         endIndex = len(testcase)
 
-        # Adding the second half of the testcase to sortedSecondHalf
+        # Adding second half of the testcase to sortedSecondHalf
         for i in range(startIndex, endIndex):
             sortedSecondHalf.append(testcase[i])
 
-        # Sorting the second half using bubble sort
+        # Sorting second half 
         for i in range(len(sortedSecondHalf)):         
             for j in range(len(sortedSecondHalf) - i - 1):
                 if sortedSecondHalf[j] > sortedSecondHalf[j + 1]:  # Swap if the element found is greater
@@ -80,11 +80,13 @@ if __name__ == "__main__":
     SortedFullList: list = []
     
     #to implement the rest of the code below, as specified 
+
+    # Making all threads 
     first = threading.Thread(target=sortingWorker, args=(True,))
     second = threading.Thread(target=sortingWorker, args=(False,))
     full = threading.Thread(target=mergingWorker)
 
-    # Starting and joining the 2 half sorting threads
+    # Starting and joining the half sorting threads
     first.start()
     second.start()
     first.join()
@@ -93,8 +95,6 @@ if __name__ == "__main__":
     # Starting and joining the merging thread
     full.start()
     full.join()
-
-
 
     #as a simple test, printing the final sorted list
     print("The final sorted list is ", SortedFullList)
