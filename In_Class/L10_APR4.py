@@ -1,3 +1,7 @@
+# Q1 
+# Code review is when someone else reviews your code carefully and systematically. It is crucial that someone else does it.
+
+# Q2: 
 from demo import Arithmetic
 import unittest
 
